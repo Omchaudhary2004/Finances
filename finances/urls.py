@@ -27,4 +27,5 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('marketoverview' , views.marketoverview, name='marketoverview'),
     path('markettai/', views.markettai, name='markettai'),
+    path('api/live-prices/', views.get_live_prices, name='live-prices'),
 ]

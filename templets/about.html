@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -117,13 +117,13 @@
                         <a class="nav-link" href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Market Overview</a>
+                        <a class="nav-link" href="{% url 'marketoverview' %}">Market Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Predictions</a>
+                        <a class="nav-link" href="{% url 'markettai' %}">Predictions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
                     </li>
                 </ul>
             </div>
@@ -147,15 +147,15 @@
                 <p>Stay ahead of the market with <strong>live trend forecasts</strong> updated every 15 minutes.</p>
             </div>
             <div class="feature">
-                <img src="optionchain_logo.png" alt="Option Chain Logo"> <h3>Smart Option Chain Analysis</h3>
+                <img src="static/media/Optionchain.png" alt="Option Chain Logo"> <h3>Smart Option Chain Analysis</h3>
                 <p>Understand market sentiment with <strong>OI, IV, Greeks, and PCR</strong> data.</p>
             </div>
             <div class="feature">
-                <img src="ml_logo.png" alt="ML Logo"> <h3>ML-Powered Insights</h3>
+                <img src="static/media/api.png" alt="ML Logo"> <h3>ML-Powered Insights</h3>
                 <p>Harness the power of <strong>XGBoost + LSTM hybrid models</strong> for better accuracy.</p>
             </div>
             <div class="feature">
-                <img src="api_logo.png" alt="API Logo"> <h3>Seamless API Integration</h3>
+                <img src="static/media/REST.png" alt="API Logo"> <h3>Seamless API Integration</h3>
                 <p>Automate your trading with an easy-to-use <strong>REST API</strong>.</p>
             </div>
         </div>
@@ -172,5 +172,255 @@
         <a href="#" class="cta">Learn More</a>
     </section>
 
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - NIFTY Prediction AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+
+        .navbar {
+            background-color: #444;
+            padding: 0.5rem 0;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-nav {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 0.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .about-header {
+            padding: 80px 20px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 30px;
+            font-weight: 500;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #1d1d1f;
+            margin-bottom: 20px;
+        }
+
+        .team-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            width: 280px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .team-member h3 {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .team-member p {
+            color: #6e6e73;
+            font-size: 16px;
+        }
+
+        .feature-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            width: 300px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .feature img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #6e6e73;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'marketoverview' %}">Market Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'markettai' %}">Predictions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Page Content -->
+    <div class="about-header">
+        <h1>About NIFTY Prediction AI</h1>
+        <p style="max-width: 600px; margin: 0 auto; color: #6e6e73; font-size: 20px;">
+            The story behind our mission to revolutionize market prediction
+        </p>
+    </div>
+
+    <div class="about-content">
+        <h2>Our Vision</h2>
+        <p>
+            NIFTY Prediction AI was born from a simple idea: make advanced market analysis accessible to everyone. 
+            We believe that by combining cutting-edge AI technology with real-time market data, we can provide traders 
+            and investors with powerful insights that were once only available to major financial institutions.
+        </p>
+
+        <h2>Our Technology</h2>
+        <p>
+            Our platform leverages a hybrid machine learning approach, combining LSTM neural networks with XGBoost 
+            algorithms to analyze patterns in historical market data, options chain metrics, and technical indicators. 
+            This sophisticated system continuously learns and adapts to changing market conditions to deliver 
+            increasingly accurate predictions.
+        </p>
+
+        <!-- Feature Section with Logos -->
+        <div class="feature-section">
+            <div class="feature">
+                <img src="static/media/Stocks (1).png" alt="Real-Time Logo">
+                <h3>Real-Time Predictions</h3>
+                <p>Stay ahead of the market with live trend forecasts updated every 15 minutes.</p>
+            </div>
+            <div class="feature">
+                <img src="static/media/Optionchain.png" alt="Option Chain Logo">
+                <h3>Smart Option Chain Analysis</h3>
+                <p>Understand market sentiment with OI, IV, Greeks, and PCR data.</p>
+            </div>
+            <div class="feature">
+                <img src="static/media/api.png" alt="ML Logo">
+                <h3>ML-Powered Insights</h3>
+                <p>Harness the power of XGBoost + LSTM hybrid models for better accuracy.</p>
+            </div>
+            <div class="feature">
+                <img src="static/media/REST.png" alt="API Logo">
+                <h3>Seamless API Integration</h3>
+                <p>Automate your trading with an easy-to-use REST API.</p>
+            </div>
+        </div>
+
+        <h2>Who We Serve</h2>
+        <p>
+            Whether you're a day trader looking for short-term opportunities, an investor planning longer-term 
+            strategies, or a financial institution seeking to enhance your analytical capabilities, our platform 
+            is designed to provide value at every level of market participation.
+        </p>
+
+        <h2>Our Commitment</h2>
+        <p>
+            We are committed to transparency, accuracy, and continuous improvement. While no prediction system 
+            is perfect, we strive to provide the most reliable forecasts possible and to be honest about both 
+            the capabilities and limitations of our technology.
+        </p>
+
+        <!-- Team Section
+        <h2>Our Team</h2>
+        <div class="team-section">
+            <div class="team-member">
+                <img src="/api/placeholder/150/150" alt="Team Member">
+                <h3>John Doe</h3>
+                <p>Lead AI Researcher</p>
+            </div>
+            <div class="team-member">
+                <img src="/api/placeholder/150/150" alt="Team Member">
+                <h3>Jane Smith</h3>
+                <p>Financial Analyst</p>
+            </div>
+            <div class="team-member">
+                <img src="/api/placeholder/150/150" alt="Team Member">
+                <h3>Mike Johnson</h3>
+                <p>Full Stack Developer</p>
+            </div>
+        </div>
+    </div> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

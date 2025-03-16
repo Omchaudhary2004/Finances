@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 # from finances.logic.data import Datacollection  # Import your function
+import yfinance as yf
 import json
 import time
 #############################################################
@@ -431,11 +432,18 @@ def markettai(request):
             return X_train, y_train, X_val, y_val, X_test, y_test, scaler
 
 ################################################################################################
+        
+        
         access_token = logins(code)
         print(access_token)
         mindata = minute_data(access_token)
         yeardat = year_data(access_token)
-        df = concat_ohcv_dataframes(mindata , yeardat)
+        if timeframe == '1minute':
+            df = mindata
+        elif timeframe == 'day':
+            df = yeardat
+        else :
+            df = concat_ohcv_dataframes(mindata , yeardat)
         dataf = df[['Datetime','Close']]
         df = dataf_to_windowed_df(dataf)
         X_train, y_train, X_val, y_val, X_test, y_test, scaler = preprocess_data(df)
@@ -446,20 +454,33 @@ def markettai(request):
 
         # Load trained model for prediction
         trained_model = load_model("nifty_lstm_model.h5")
-
+        nifty = yf.Ticker("^NSEI")
         # Example Prediction
-        recent_closes = [22397.2, 22470.5, 22497.9]  # Last 3 days' close
+        # recent_closes = [22397.2, 22470.5, 22497.9]  # Last 3 days' close
+        if timeframe == '1minute':
+            # Fetch last 3 daily closing prices
+            historical_data = nifty.history(period="5d")
+            closing_prices = historical_data["Close"].dropna().tail(3).round(1).tolist()
+            print("Last 3 daily closing prices of NIFTY 50:", closing_prices)
+        
+        elif timeframe == 'day':
+            # Fetch last 3 one-minute interval prices
+            historical_data = nifty.history(period="1d", interval="1m")
+            closing_prices = historical_data["Close"].dropna().tail(3).round(1).tolist()
+            print("Last 3 one-minute interval prices of NIFTY 50:", closing_prices)
+        
+        recent_closes = closing_prices
         predicted_price = predict_close(trained_model, recent_closes, scaler)
 
         print(f"Predicted Today's Close: {predicted_price}")
         
-        time.sleep(3)  # Simulating a 3-second calculation
+        
         
         # Example result (replace with your actual result calculation)
         if modem == "Lstm_model_1":
-            result = f"Model 1 prediction for {code} using {timeframe} timeframe: 125.67 and predected price is {predicted_price} "
+            result = f"Model 1 prediction for {code} using timeframe:{timeframe} and predected price is {predicted_price} "
         else:
-            result = f"Model 2 prediction for {code} using {timeframe} timeframe: 130.42 and predected price is {predicted_price}"
+            result = f"Model 2 prediction for {code} using timeframe:{timeframe} and predected price is {predicted_price}"
         
         # Return result as JSON
         return JsonResponse({
@@ -472,3 +493,35 @@ def markettai(request):
         
     # For regular GET requests, just render the form
     return render(request, 'markettai.html')
+
+import yfinance as yf
+from django.http import JsonResponse
+
+import yfinance as yf
+from django.http import JsonResponse
+
+def get_live_prices(request):
+    indices = {
+        "^NSEI": "NIFTY",
+        "^BSESN": "SENSEX",
+        "^NSEBANK": "BANK_NIFTY",
+        "^CNXIT": "NIFTY_IT",
+        "^IXIC": "NASDAQ",        # NASDAQ Composite
+        "^DJI": "DOW_JONES",      # Dow Jones Industrial Average
+        "^GSPC": "SP500",         # S&P 500
+        "^FTSE": "FTSE100",       # FTSE 100
+    }
+
+    prices = {}
+    try:
+        for symbol, name in indices.items():
+            ticker = yf.Ticker(symbol)
+            history = ticker.history(period="1d")
+            if not history.empty:
+                prices[name] = round(history["Close"].iloc[-1], 2)
+            else:
+                prices[name] = "N/A"
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse(prices)
